@@ -1,0 +1,15 @@
+[phases.setup]
+nixPkgs = ["python39", "python39Packages.pip"]
+
+[phases.install]
+cmds = [
+    "pip install -r requirements.txt"
+]
+
+[phases.build]
+cmds = [
+    "python -c 'import tensorflow as tf; print(\"TensorFlow version:\", tf.__version__)'"
+]
+
+[start]
+cmd = "gunicorn --bind 0.0.0.0:$PORT --workers 4 --timeout 120 app:app"
