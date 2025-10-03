@@ -145,7 +145,7 @@
             </div>
 
             <!-- Quick Links -->
-            <div class="card shadow-lg border-0">
+            <div class="card shadow-lg border-0 mb-4">
                 <div class="card-header bg-warning text-dark">
                     <h5 class="mb-0">
                         <i class="fas fa-link me-2"></i>Quick Links
@@ -164,6 +164,36 @@
                         </a>
                         <a href="{{ url_for('about') }}" class="list-group-item list-group-item-action">
                             <i class="fas fa-info-circle me-2"></i>About Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resources & Documentation -->
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-file-alt me-2"></i>Resources & Documentation
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <a href="{{ url_for('static', filename='Plant-disease-detection-report.pdf') }}" 
+                           class="list-group-item list-group-item-action" 
+                           target="_blank" 
+                           download>
+                            <i class="fas fa-file-pdf me-2 text-danger"></i>
+                            <strong>Download Project Report</strong>
+                            <br>
+                            <small class="text-muted">Complete documentation and research findings</small>
+                        </a>
+                        <a href="https://github.com/omkarkalagi/plant-disease-detector" 
+                           class="list-group-item list-group-item-action" 
+                           target="_blank">
+                            <i class="fab fa-github me-2 text-dark"></i>
+                            <strong>View on GitHub</strong>
+                            <br>
+                            <small class="text-muted">Source code and project repository</small>
                         </a>
                     </div>
                 </div>
