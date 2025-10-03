@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+
+{% block title %}Help & Support - PlantAI Disease Detector{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 fw-bold text-gradient mb-3">
+                <i class="fas fa-question-circle me-3"></i>Help & Support
+            </h1>
+            <p class="lead text-muted">
+                Get the help you need to make the most of PlantAI Disease Detector
+            </p>
+        </div>
+    </div>
+
+    <!-- Quick Help Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-lg-4 col-md-6">
+            <div class="help-card">
+                <div class="help-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h5>Live Detection</h5>
+                <p>Learn how to use real-time camera detection for instant disease analysis.</p>
+                <a href="#live-detection" class="btn btn-outline-primary">Learn More</a>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="help-card">
+                <div class="help-icon">
+                    <i class="fas fa-upload"></i>
+                </div>
+                <h5>Image Upload</h5>
+                <p>Step-by-step guide for uploading and analyzing plant images.</p>
+                <a href="#image-upload" class="btn btn-outline-primary">Learn More</a>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="help-card">
+                <div class="help-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h5>AI Training</h5>
+                <p>Understand how to train and improve your AI models for better accuracy.</p>
+                <a href="#ai-training" class="btn btn-outline-primary">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card shadow-custom">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="fas fa-question-circle me-2"></i>Frequently Asked Questions
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="accordion" id="faqAccordion">
+                        <!-- FAQ Item 1 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                                    How accurate is the plant disease detection?
+                                </button>
+                            </h2>
+                            <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Our AI model achieves 98%+ accuracy in detecting plant diseases. The system uses advanced deep learning algorithms trained on millions of plant images and is continuously improved through machine learning and validation by agricultural experts.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 2 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                                    What image formats are supported?
+                                </button>
+                            </h2>
+                            <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    We support PNG, JPG, JPEG, and GIF formats. The maximum file size is 16MB. For best results, use clear, well-lit images of plant leaves with good contrast and minimal background interference.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 3 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                                    How does the live detection feature work?
+                                </button>
+                            </h2>
+                            <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    The live detection feature uses your device's camera to analyze plant leaves in real-time. Simply point your camera at a plant leaf, and our AI will provide instant disease analysis. All processing happens locally in your browser for privacy and speed.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 4 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq4">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+                                    Is my data secure and private?
+                                </button>
+                            </h2>
+                            <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes, we take privacy seriously. Your uploaded images are processed securely and are not stored permanently. We use industry-standard encryption and security measures. For live detection, all processing happens locally in your browser.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 5 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq5">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5">
+                                    Can I use this system for commercial purposes?
+                                </button>
+                            </h2>
+                            <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes, our system is designed for both personal and commercial use. For large-scale commercial applications, please contact us to discuss enterprise solutions, API access, and custom pricing options.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Item 6 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="faq6">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6">
+                                    How can I improve detection accuracy?
+                                </button>
+                            </h2>
+                            <div id="collapse6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    For best results, ensure your images are clear, well-lit, and show the affected area clearly. Avoid blurry or heavily shadowed images. The leaf should fill most of the frame, and try to capture the image in natural lighting conditions.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Support -->
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <div class="card shadow-custom">
+                <div class="card-body p-5">
+                    <h3 class="fw-bold text-gradient mb-3">Still Need Help?</h3>
+                    <p class="lead text-muted mb-4">
+                        Our support team is here to help you get the most out of PlantAI Disease Detector.
+                    </p>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="support-option">
+                                <i class="fas fa-envelope fa-2x text-primary mb-3"></i>
+                                <h6>Email Support</h6>
+                                <p class="text-muted">support@plantai.com</p>
+                                <a href="mailto:support@plantai.com" class="btn btn-outline-primary">Send Email</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="support-option">
+                                <i class="fas fa-comments fa-2x text-primary mb-3"></i>
+                                <h6>Live Chat</h6>
+                                <p class="text-muted">Available 24/7</p>
+                                <button class="btn btn-outline-primary" onclick="startLiveChat()">Start Chat</button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="support-option">
+                                <i class="fas fa-phone fa-2x text-primary mb-3"></i>
+                                <h6>Phone Support</h6>
+                                <p class="text-muted">+1 (555) 123-4567</p>
+                                <a href="tel:+15551234567" class="btn btn-outline-primary">Call Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.help-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    text-align: center;
+    transition: all var(--transition-normal);
+    border: 1px solid var(--gray-200);
+    height: 100%;
+}
+
+.help-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-color);
+}
+
+.help-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-lg);
+    transition: all var(--transition-normal);
+}
+
+.help-card:hover .help-icon {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.help-icon i {
+    font-size: 2rem;
+    color: white;
+}
+
+.help-card h5 {
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--dark-color);
+}
+
+.help-card p {
+    color: var(--gray-600);
+    margin-bottom: var(--spacing-lg);
+}
+
+.support-option {
+    text-align: center;
+    padding: var(--spacing-lg);
+}
+
+.support-option h6 {
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--dark-color);
+}
+
+.support-option p {
+    color: var(--gray-600);
+    margin-bottom: var(--spacing-md);
+}
+
+.accordion-item {
+    border: none;
+    margin-bottom: 10px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.accordion-button {
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+    background-color: white;
+    border: none;
+    padding: var(--spacing-lg);
+}
+
+.accordion-button:not(.collapsed) {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 212, 170, 0.25);
+}
+
+.accordion-body {
+    padding: var(--spacing-lg);
+    background: white;
+    color: var(--gray-700);
+    line-height: 1.6;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function startLiveChat() {
+    // Simulate starting live chat
+    PlantAI.showNotification('Live chat feature coming soon! Please use email support for now.', 'info');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+    
+    // Smooth scrolling for help links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

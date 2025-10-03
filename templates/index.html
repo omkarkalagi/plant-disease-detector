@@ -1,0 +1,734 @@
+
+{% extends "base.html" %}
+
+{% block title %}PlantAI - Advanced Plant Disease Detection{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="hero-content" data-aos="fade-right">
+                    <h1 class="hero-title">
+                        <span class="text-gradient">Revolutionary</span><br>
+                        Plant Disease Detection
+                    </h1>
+                    <p class="hero-subtitle">
+                        Harness the power of cutting-edge AI to detect plant diseases with 98% accuracy. 
+                        Protect your crops, maximize yields, and ensure food security for the future.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Accuracy</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">2.3s</div>
+                            <div class="stat-label">Detection Time</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50K+</div>
+                            <div class="stat-label">Plants Analyzed</div>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="{{ url_for('realtime_detection') }}" class="btn-hero btn-hero-primary">
+                            <i class="fas fa-video"></i>
+                            <span>Start Live Detection</span>
+                        </a>
+                        <a href="#upload-section" class="btn-hero btn-hero-secondary">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Image</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-visual" data-aos="fade-left">
+                    <div class="floating-cards">
+                        <div class="floating-card card-1">
+                            <i class="fas fa-leaf"></i>
+                            <span>Healthy</span>
+                        </div>
+                        <div class="floating-card card-2">
+                            <i class="fas fa-bug"></i>
+                            <span>Disease</span>
+                        </div>
+                        <div class="floating-card card-3">
+                            <i class="fas fa-brain"></i>
+                            <span>AI Analysis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold text-gradient mb-3">Why Choose PlantAI?</h2>
+                <p class="lead text-muted">Advanced technology meets agricultural expertise</p>
+            </div>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h5 class="feature-title">Advanced AI Technology</h5>
+                <p class="feature-description">
+                    Our deep learning models are trained on millions of plant images, 
+                    ensuring the highest accuracy in disease detection and classification.
+                </p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h5 class="feature-title">Lightning Fast Results</h5>
+                <p class="feature-description">
+                    Get instant disease diagnosis in under 3 seconds. Our optimized 
+                    algorithms deliver real-time results without compromising accuracy.
+                </p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h5 class="feature-title">Mobile-First Design</h5>
+                <p class="feature-description">
+                    Perfect for field work. Use your smartphone camera to detect diseases 
+                    directly in your garden, farm, or greenhouse.
+                </p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h5 class="feature-title">Privacy & Security</h5>
+                <p class="feature-description">
+                    Your data is protected with enterprise-grade security. All processing 
+                    is encrypted and your images are never stored permanently.
+                </p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h5 class="feature-title">Detailed Analytics</h5>
+                <p class="feature-description">
+                    Track disease patterns, monitor crop health over time, and get 
+                    insights to improve your agricultural practices.
+                </p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="600">
+                <div class="feature-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h5 class="feature-title">Global Plant Database</h5>
+                <p class="feature-description">
+                    Our system recognizes diseases across hundreds of plant species 
+                    worldwide, making it perfect for diverse agricultural operations.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Upload Section -->
+<section class="py-5" id="upload-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="upload-section">
+                    <div class="text-center mb-4">
+                        <h3 class="text-gradient mb-3">
+                            <i class="fas fa-cloud-upload-alt me-2"></i>Upload Plant Image
+                        </h3>
+                        <p class="text-muted">Get instant disease diagnosis with our AI-powered analysis</p>
+                    </div>
+                    
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <h5>Drag & Drop or Click to Upload</h5>
+                            <p class="text-muted">Supported formats: PNG, JPG, JPEG, GIF (Max 16MB)</p>
+                            <input type="file" id="fileInput" accept="image/*" class="d-none">
+                            <button class="btn btn-primary btn-lg" onclick="document.getElementById('fileInput').click()">
+                                <i class="fas fa-plus me-2"></i>Choose File
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Preview Area -->
+                    <div id="previewArea" class="mt-4 d-none">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="mb-3">
+                                    <i class="fas fa-image me-2"></i>Uploaded Image
+                                </h6>
+                                <img id="previewImage" class="img-fluid rounded shadow" alt="Preview">
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="mb-3">
+                                    <i class="fas fa-brain me-2"></i>Analysis Results
+                                </h6>
+                                <div id="resultsArea">
+                                    <div class="text-center py-4">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Analyzing...</span>
+                                        </div>
+                                        <p class="mt-3 text-muted">Analyzing your image...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Supported Diseases Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold text-gradient mb-3">Supported Diseases</h2>
+                <p class="lead text-muted">Our AI can detect a wide range of plant diseases</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="disease-card">
+                    <div class="disease-icon">
+                        <i class="fas fa-bug"></i>
+                    </div>
+                    <h6>Bacterial Blight</h6>
+                    <p class="text-muted">Bacterial infection causing leaf spots and wilting</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="disease-card">
+                    <div class="disease-icon">
+                        <i class="fas fa-virus"></i>
+                    </div>
+                    <h6>Curl Virus</h6>
+                    <p class="text-muted">Viral disease causing leaf curling and stunting</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="disease-card">
+                    <div class="disease-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h6>Healthy Leaf</h6>
+                    <p class="text-muted">Perfect plant health with no disease symptoms</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="disease-card">
+                    <div class="disease-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h6>Herbicide Damage</h6>
+                    <p class="text-muted">Chemical damage from herbicide exposure</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="disease-card">
+                    <div class="disease-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h6>Leaf Hopper</h6>
+                    <p class="text-muted">Insect damage from leaf hopper feeding</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="disease-card">
+                    <div class="disease-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h6>Leaf Redding</h6>
+                    <p class="text-muted">Abnormal red coloration in plant leaves</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="disease-card">
+                    <div class="disease-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h6>Leaf Variegation</h6>
+                    <p class="text-muted">Abnormal color patterns in leaf tissue</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold text-gradient mb-5">Our Impact</h2>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <div class="stat-number" data-count="50000">0</div>
+                    <div class="stat-label">Images Analyzed</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-number" data-count="2500">0</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="stat-number" data-count="98">0</div>
+                    <div class="stat-label">Accuracy Rate</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-number" data-count="24">0</div>
+                    <div class="stat-label">Hours Available</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-gradient text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="mb-3">Ready to Revolutionize Your Agriculture?</h3>
+                <p class="mb-0">Join thousands of farmers and agricultural professionals who trust PlantAI for accurate disease detection.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{{ url_for('realtime_detection') }}" class="btn btn-light btn-lg">
+                    <i class="fas fa-rocket me-2"></i>Get Started Now
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.hero-stats {
+    display: flex;
+    gap: var(--spacing-xl);
+    margin: var(--spacing-xl) 0;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: var(--spacing-xs);
+}
+
+.floating-cards {
+    position: relative;
+    height: 400px;
+}
+
+.floating-card {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    text-align: center;
+    color: white;
+    animation: float 6s ease-in-out infinite;
+}
+
+.floating-card i {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-sm);
+    display: block;
+}
+
+.floating-card span {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.card-1 {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.card-2 {
+    top: 50%;
+    right: 20%;
+    animation-delay: 2s;
+}
+
+.card-3 {
+    bottom: 20%;
+    left: 30%;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+.disease-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    text-align: center;
+    transition: all var(--transition-normal);
+    border: 1px solid var(--gray-200);
+    height: 100%;
+}
+
+.disease-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-color);
+}
+
+.disease-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-md);
+    transition: all var(--transition-normal);
+}
+
+.disease-card:hover .disease-icon {
+    transform: scale(1.1) rotate(10deg);
+}
+
+.disease-icon i {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.disease-card h6 {
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--dark-color);
+}
+
+.stat-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    text-align: center;
+    transition: all var(--transition-normal);
+    border: 1px solid var(--gray-200);
+    height: 100%;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-xl);
+}
+
+.stat-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--spacing-lg);
+    transition: all var(--transition-normal);
+}
+
+.stat-card:hover .stat-icon {
+    transform: scale(1.1);
+}
+
+.stat-icon i {
+    font-size: 2rem;
+    color: white;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    line-height: 1;
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-label {
+    font-weight: 600;
+    color: var(--gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .hero-stats {
+        flex-direction: column;
+        gap: var(--spacing-lg);
+    }
+    
+    .floating-cards {
+        height: 300px;
+    }
+    
+    .floating-card {
+        padding: var(--spacing-md);
+    }
+    
+    .floating-card i {
+        font-size: 1.5rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+    
+    // Animate counters
+    animateCounters();
+    
+    // Upload functionality
+    setupUpload();
+});
+
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number[data-count]');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = parseInt(counter.getAttribute('data-count'));
+                animateCounter(counter, target);
+                observer.unobserve(counter);
+            }
+        });
+    });
+    
+    counters.forEach(counter => observer.observe(counter));
+}
+
+function animateCounter(element, target) {
+    let current = 0;
+    const increment = target / 100;
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            current = target;
+            clearInterval(timer);
+        }
+        element.textContent = Math.floor(current).toLocaleString();
+    }, 20);
+}
+
+function setupUpload() {
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const previewArea = document.getElementById('previewArea');
+    const previewImage = document.getElementById('previewImage');
+    const resultsArea = document.getElementById('resultsArea');
+
+    // Drag and drop functionality
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        uploadArea.classList.add('drag-over');
+    });
+
+    uploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('drag-over');
+    });
+
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('drag-over');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFile(files[0]);
+        }
+    });
+
+    // File input change
+    fileInput.addEventListener('change', function(e) {
+        if (e.target.files.length > 0) {
+            handleFile(e.target.files[0]);
+        }
+    });
+
+    function handleFile(file) {
+        if (!file.type.startsWith('image/')) {
+            showNotification('Please select an image file.', 'error');
+            return;
+        }
+
+        if (file.size > 16 * 1024 * 1024) {
+            showNotification('File size must be less than 16MB.', 'error');
+            return;
+        }
+
+        // Show preview
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+            previewArea.classList.remove('d-none');
+            uploadArea.style.display = 'none';
+            
+            // Upload and analyze
+            uploadAndAnalyze(file);
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function uploadAndAnalyze(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                resultsArea.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        ${data.error}
+                    </div>
+                `;
+            } else {
+                displayResults(data);
+            }
+        })
+        .catch(error => {
+            resultsArea.innerHTML = `
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Error analyzing image: ${error.message}
+                </div>
+            `;
+        });
+    }
+
+    function displayResults(data) {
+        const confidence = (data.confidence * 100).toFixed(1);
+        const confidenceClass = confidence >= 80 ? 'success' : confidence >= 60 ? 'warning' : 'danger';
+        
+        resultsArea.innerHTML = `
+            <div class="result-card">
+                <div class="alert alert-${confidenceClass}">
+                    <h5 class="alert-heading">
+                        <i class="fas fa-diagnoses me-2"></i>
+                        ${data.predicted_class}
+                    </h5>
+                    <p class="mb-2">Confidence: <strong>${confidence}%</strong></p>
+                    <p class="mb-0">Processing time: ${data.processing_time}s</p>
+                </div>
+                
+                <h6 class="mt-3">All Predictions:</h6>
+                <div class="predictions-list">
+                    ${data.all_predictions.map(pred => `
+                        <div class="prediction-item d-flex justify-content-between align-items-center p-2 mb-2 bg-light rounded">
+                            <span>${pred.class}</span>
+                            <span class="badge bg-${pred.confidence >= 0.8 ? 'success' : pred.confidence >= 0.6 ? 'warning' : 'secondary'}">
+                                ${(pred.confidence * 100).toFixed(1)}%
+                            </span>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <button class="btn btn-outline-primary mt-3" onclick="resetUpload()">
+                    <i class="fas fa-upload me-2"></i>Upload Another Image
+                </button>
+            </div>
+        `;
+    }
+
+    window.resetUpload = function() {
+        previewArea.classList.add('d-none');
+        uploadArea.style.display = 'block';
+        fileInput.value = '';
+    };
+}
+
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `toast-notification toast-${type}`;
+    notification.innerHTML = `
+        <div class="toast-content">
+            <i class="fas fa-${type === 'error' ? 'exclamation-triangle' : 'info-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => notification.classList.add('show'), 100);
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => document.body.removeChild(notification), 300);
+    }, 3000);
+}
+</script>
+{% endblock %}

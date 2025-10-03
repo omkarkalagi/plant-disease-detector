@@ -1,0 +1,52 @@
+# Large dataset files
+Original Dataset/
+Augmented Dataset/
+plant_disease_env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git/
+.gitignore
+README.md
+DEPLOYMENT.md
+.env
+.env.example
+*.md
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Large model files (will be downloaded at runtime)
+*.h5
+*.pkl
+*.joblib
+*.model
+
+# Temporary files
+*.tmp
+*.temp
+uploads/
+training_data/
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini

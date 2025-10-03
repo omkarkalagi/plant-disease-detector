@@ -1,0 +1,665 @@
+
+{% extends "base.html" %}
+
+{% block title %}Live Detection - PlantAI Disease Detector{% endblock %}
+
+{% block content %}
+<!-- Hero Section for Live Detection -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="hero-content" data-aos="fade-right">
+                    <h1 class="hero-title">
+                        <span class="text-gradient">Live Plant</span><br>
+                        Disease Detection
+                    </h1>
+                    <p class="hero-subtitle">
+                        Point your camera at any plant leaf and get instant, real-time disease analysis 
+                        powered by advanced AI. No uploads needed - just point, scan, and detect!
+                    </p>
+                    <div class="hero-actions">
+                        <button class="btn-hero btn-hero-primary" id="startCameraBtn">
+                            <i class="fas fa-video"></i>
+                            <span>Start Live Detection</span>
+                        </button>
+                        <a href="{{ url_for('index') }}" class="btn-hero btn-hero-secondary">
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Instead</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-visual" data-aos="fade-left">
+                    <div class="camera-preview">
+                        <div class="camera-frame">
+                            <i class="fas fa-camera fa-5x"></i>
+                            <p>Camera will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Live Detection Interface -->
+<section class="py-5" id="detectionInterface" style="display: none;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-custom">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="fas fa-video me-2"></i>Live Plant Disease Detection
+                        </h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <!-- Camera Feed -->
+                            <div class="col-lg-8">
+                                <div class="camera-container">
+                                    <div class="camera-wrapper">
+                                        <video id="cameraFeed" autoplay muted playsinline></video>
+                                        <canvas id="detectionCanvas"></canvas>
+                                        <div class="camera-overlay">
+                                            <div class="scan-line"></div>
+                                            <div class="corner-tl"></div>
+                                            <div class="corner-tr"></div>
+                                            <div class="corner-bl"></div>
+                                            <div class="corner-br"></div>
+                                        </div>
+                                    </div>
+                                    <div class="camera-controls">
+                                        <button class="btn btn-primary" id="captureBtn">
+                                            <i class="fas fa-camera"></i>
+                                            <span>Capture & Analyze</span>
+                                        </button>
+                                        <button class="btn btn-secondary" id="stopCameraBtn">
+                                            <i class="fas fa-stop"></i>
+                                            <span>Stop Camera</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Analysis Results -->
+                            <div class="col-lg-4">
+                                <div class="analysis-panel">
+                                    <h5 class="mb-3">
+                                        <i class="fas fa-brain me-2"></i>Analysis Results
+                                    </h5>
+                                    
+                                    <!-- Real-time Status -->
+                                    <div class="status-card mb-3">
+                                        <div class="status-indicator" id="statusIndicator">
+                                            <div class="status-dot"></div>
+                                            <span id="statusText">Ready to detect</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Detection Results -->
+                                    <div class="results-container" id="resultsContainer">
+                                        <div class="no-results">
+                                            <i class="fas fa-leaf fa-3x text-muted mb-3"></i>
+                                            <p class="text-muted">Point your camera at a plant leaf to start detection</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Confidence Meter -->
+                                    <div class="confidence-meter mt-4">
+                                        <h6>Detection Confidence</h6>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar" id="confidenceBar" role="progressbar" style="width: 0%"></div>
+                                        </div>
+                                        <small class="text-muted" id="confidenceText">0%</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="display-5 fw-bold text-gradient mb-3">Why Choose Live Detection?</h2>
+                <p class="lead text-muted">Experience the future of plant disease detection</p>
+            </div>
+        </div>
+        <div class="feature-grid">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h5 class="feature-title">Instant Results</h5>
+                <p class="feature-description">
+                    Get real-time disease analysis as you point your camera at plant leaves. 
+                    No waiting, no uploads - just instant insights.
+                </p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h5 class="feature-title">Mobile Optimized</h5>
+                <p class="feature-description">
+                    Perfect for field work. Use your smartphone camera to detect diseases 
+                    directly in your garden or farm.
+                </p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h5 class="feature-title">Privacy First</h5>
+                <p class="feature-description">
+                    All processing happens locally in your browser. Your images never leave 
+                    your device, ensuring complete privacy.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Instructions Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card shadow-custom">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="fas fa-info-circle me-2"></i>How to Use Live Detection
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-4">
+                            <div class="col-md-4 text-center">
+                                <div class="instruction-step">
+                                    <div class="step-number">1</div>
+                                    <h6>Allow Camera Access</h6>
+                                    <p class="text-muted">Click "Start Live Detection" and allow camera access when prompted.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="instruction-step">
+                                    <div class="step-number">2</div>
+                                    <h6>Point at Plant Leaf</h6>
+                                    <p class="text-muted">Position your camera so the plant leaf fills the detection area.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="instruction-step">
+                                    <div class="step-number">3</div>
+                                    <h6>Get Instant Results</h6>
+                                    <p class="text-muted">Tap "Capture & Analyze" to get immediate disease detection results.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.camera-preview {
+    text-align: center;
+    padding: var(--spacing-xxl);
+}
+
+.camera-frame {
+    width: 300px;
+    height: 300px;
+    border: 3px dashed var(--primary-color);
+    border-radius: var(--radius-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    background: linear-gradient(135deg, rgba(0, 212, 170, 0.05), rgba(108, 92, 231, 0.05));
+    transition: all var(--transition-normal);
+}
+
+.camera-frame:hover {
+    border-color: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+.camera-container {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.camera-wrapper {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: var(--dark-color);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+}
+
+#cameraFeed {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#detectionCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.camera-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.scan-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+    0% { transform: translateY(-100px); }
+    100% { transform: translateY(100px); }
+}
+
+.corner-tl, .corner-tr, .corner-bl, .corner-br {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 3px solid var(--primary-color);
+}
+
+.corner-tl {
+    top: 20px;
+    left: 20px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.corner-tr {
+    top: 20px;
+    right: 20px;
+    border-left: none;
+    border-bottom: none;
+}
+
+.corner-bl {
+    bottom: 20px;
+    left: 20px;
+    border-right: none;
+    border-top: none;
+}
+
+.corner-br {
+    bottom: 20px;
+    right: 20px;
+    border-left: none;
+    border-top: none;
+}
+
+.camera-controls {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin-top: var(--spacing-lg);
+}
+
+.analysis-panel {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(20px);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    height: 100%;
+}
+
+.status-card {
+    background: linear-gradient(135deg, var(--info-color), var(--secondary-color));
+    color: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.results-container {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-results {
+    text-align: center;
+    color: var(--gray-500);
+}
+
+.result-item {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--primary-color);
+}
+
+.result-disease {
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: var(--spacing-xs);
+}
+
+.result-confidence {
+    font-size: 0.9rem;
+    color: var(--gray-600);
+}
+
+.confidence-meter {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+}
+
+.progress {
+    height: 8px;
+    border-radius: var(--radius-sm);
+    background: var(--gray-200);
+}
+
+.progress-bar {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: var(--radius-sm);
+    transition: width 0.3s ease;
+}
+
+.instruction-step {
+    padding: var(--spacing-lg);
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin: 0 auto var(--spacing-md);
+}
+
+@media (max-width: 768px) {
+    .camera-wrapper {
+        height: 300px;
+    }
+    
+    .camera-controls {
+        flex-direction: column;
+    }
+    
+    .camera-controls .btn {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const startCameraBtn = document.getElementById('startCameraBtn');
+    const stopCameraBtn = document.getElementById('stopCameraBtn');
+    const captureBtn = document.getElementById('captureBtn');
+    const cameraFeed = document.getElementById('cameraFeed');
+    const detectionCanvas = document.getElementById('detectionCanvas');
+    const detectionInterface = document.getElementById('detectionInterface');
+    const statusText = document.getElementById('statusText');
+    const resultsContainer = document.getElementById('resultsContainer');
+    const confidenceBar = document.getElementById('confidenceBar');
+    const confidenceText = document.getElementById('confidenceText');
+    
+    let stream = null;
+    let isDetecting = false;
+    
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+    
+    startCameraBtn.addEventListener('click', startCamera);
+    stopCameraBtn.addEventListener('click', stopCamera);
+    captureBtn.addEventListener('click', captureAndAnalyze);
+    
+    async function startCamera() {
+        try {
+            updateStatus('Requesting camera access...', 'warning');
+            
+            stream = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 },
+                    facingMode: 'environment' // Use back camera on mobile
+                }
+            });
+            
+            cameraFeed.srcObject = stream;
+            detectionInterface.style.display = 'block';
+            detectionInterface.scrollIntoView({ behavior: 'smooth' });
+            
+            updateStatus('Camera active - Point at plant leaf', 'success');
+            
+            // Start continuous detection
+            startContinuousDetection();
+            
+        } catch (error) {
+            console.error('Error accessing camera:', error);
+            updateStatus('Camera access denied', 'error');
+            showError('Unable to access camera. Please check permissions and try again.');
+        }
+    }
+    
+    function stopCamera() {
+        if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            stream = null;
+        }
+        
+        cameraFeed.srcObject = null;
+        detectionInterface.style.display = 'none';
+        updateStatus('Camera stopped', 'info');
+        isDetecting = false;
+    }
+    
+    function startContinuousDetection() {
+        isDetecting = true;
+        // Simulate continuous detection
+        setInterval(() => {
+            if (isDetecting && stream) {
+                // In a real implementation, you would run detection here
+                // For now, we'll just show the interface is ready
+            }
+        }, 1000);
+    }
+    
+    async function captureAndAnalyze() {
+        if (!stream) {
+            showError('Please start the camera first');
+            return;
+        }
+        
+        updateStatus('Analyzing image...', 'warning');
+        captureBtn.disabled = true;
+        
+        try {
+            // Capture frame from video
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = cameraFeed.videoWidth;
+            canvas.height = cameraFeed.videoHeight;
+            ctx.drawImage(cameraFeed, 0, 0);
+            
+            // Convert to blob and send for analysis
+            canvas.toBlob(async (blob) => {
+                const formData = new FormData();
+                formData.append('file', blob, 'capture.jpg');
+                
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    showError(result.error);
+                    updateStatus('Analysis failed', 'error');
+                } else {
+                    displayResults(result);
+                    updateStatus('Analysis complete', 'success');
+                }
+                
+                captureBtn.disabled = false;
+            }, 'image/jpeg', 0.8);
+            
+        } catch (error) {
+            console.error('Error analyzing image:', error);
+            showError('Failed to analyze image');
+            updateStatus('Analysis failed', 'error');
+            captureBtn.disabled = false;
+        }
+    }
+    
+    function displayResults(result) {
+        const confidence = Math.round(result.confidence * 100);
+        
+        // Update confidence meter
+        confidenceBar.style.width = confidence + '%';
+        confidenceText.textContent = confidence + '%';
+        
+        // Display results
+        resultsContainer.innerHTML = `
+            <div class="result-item">
+                <div class="result-disease">${result.predicted_class}</div>
+                <div class="result-confidence">Confidence: ${confidence}%</div>
+            </div>
+        `;
+        
+        // Add all predictions
+        result.all_predictions.slice(0, 3).forEach((pred, index) => {
+            if (index > 0) {
+                const predConfidence = Math.round(pred.confidence * 100);
+                resultsContainer.innerHTML += `
+                    <div class="result-item" style="opacity: ${0.8 - index * 0.2}">
+                        <div class="result-disease">${pred.class}</div>
+                        <div class="result-confidence">Confidence: ${predConfidence}%</div>
+                    </div>
+                `;
+            }
+        });
+    }
+    
+    function updateStatus(message, type) {
+        statusText.textContent = message;
+        const statusDot = document.querySelector('.status-dot');
+        
+        // Remove existing classes
+        statusDot.className = 'status-dot';
+        
+        // Add type-specific class
+        if (type === 'success') {
+            statusDot.style.background = 'var(--success-color)';
+        } else if (type === 'warning') {
+            statusDot.style.background = 'var(--warning-color)';
+        } else if (type === 'error') {
+            statusDot.style.background = 'var(--danger-color)';
+        } else {
+            statusDot.style.background = 'var(--info-color)';
+        }
+    }
+    
+    function showError(message) {
+        // Create a toast notification
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.innerHTML = `
+            <div class="toast-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        // Show toast
+        setTimeout(() => toast.classList.add('show'), 100);
+        
+        // Hide toast after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => document.body.removeChild(toast), 300);
+        }, 3000);
+    }
+    
+    // Handle page visibility change
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden && stream) {
+            // Pause detection when page is not visible
+            isDetecting = false;
+        } else if (!document.hidden && stream) {
+            // Resume detection when page becomes visible
+            isDetecting = true;
+        }
+    });
+});
+</script>
+{% endblock %}

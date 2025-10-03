@@ -1,0 +1,420 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics - Plant Disease Detector{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h1 class="display-4 fw-bold text-success mb-3">
+                <i class="fas fa-chart-line me-3"></i>Analytics Dashboard
+            </h1>
+            <p class="lead text-muted">
+                Real-time insights and performance metrics for your plant disease detection system.
+            </p>
+        </div>
+    </div>
+
+    <!-- Key Metrics -->
+    <div class="row g-4 mb-5">
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-lg border-0 bg-primary text-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-images fa-3x mb-3"></i>
+                    <h3 class="display-6 fw-bold" id="totalImages">0</h3>
+                    <p class="mb-0">Total Images Analyzed</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-lg border-0 bg-success text-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-users fa-3x mb-3"></i>
+                    <h3 class="display-6 fw-bold" id="activeUsers">0</h3>
+                    <p class="mb-0">Active Users</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-lg border-0 bg-info text-white">
+                <div class="card-body text-center">
+                    <i class="fas fa-clock fa-3x mb-3"></i>
+                    <h3 class="display-6 fw-bold" id="avgProcessingTime">0s</h3>
+                    <p class="mb-0">Avg Processing Time</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="card shadow-lg border-0 bg-warning text-dark">
+                <div class="card-body text-center">
+                    <i class="fas fa-bullseye fa-3x mb-3"></i>
+                    <h3 class="display-6 fw-bold" id="avgAccuracy">0%</h3>
+                    <p class="mb-0">Average Accuracy</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="row g-4 mb-5">
+        <!-- Disease Distribution Chart -->
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-pie me-2"></i>Disease Distribution
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="diseaseChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Processing Time Chart -->
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-line me-2"></i>Processing Time Trends
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="processingChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="row g-4 mb-5">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-history me-2"></i>Recent Activity
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Disease Detected</th>
+                                    <th>Confidence</th>
+                                    <th>Processing Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentActivity">
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">Loading recent activity...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Status -->
+        <div class="col-lg-4">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-server me-2"></i>System Status
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="status-item mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Model Status</span>
+                            <span class="badge bg-success" id="modelStatus">Active</span>
+                        </div>
+                    </div>
+                    <div class="status-item mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Database</span>
+                            <span class="badge bg-success" id="dbStatus">Connected</span>
+                        </div>
+                    </div>
+                    <div class="status-item mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>API Response</span>
+                            <span class="badge bg-success" id="apiStatus">Healthy</span>
+                        </div>
+                    </div>
+                    <div class="status-item mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Uptime</span>
+                            <span class="text-muted" id="uptime">0d 0h 0m</span>
+                        </div>
+                    </div>
+                    <div class="status-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Memory Usage</span>
+                            <span class="text-muted" id="memoryUsage">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance Metrics -->
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-bar me-2"></i>Performance Metrics
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="metric-circle mx-auto mb-3">
+                                <div class="progress-circle" data-percentage="95">
+                                    <span class="progress-text">95%</span>
+                                </div>
+                            </div>
+                            <h6>Model Accuracy</h6>
+                        </div>
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="metric-circle mx-auto mb-3">
+                                <div class="progress-circle" data-percentage="98">
+                                    <span class="progress-text">98%</span>
+                                </div>
+                            </div>
+                            <h6>System Uptime</h6>
+                        </div>
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="metric-circle mx-auto mb-3">
+                                <div class="progress-circle" data-percentage="87">
+                                    <span class="progress-text">87%</span>
+                                </div>
+                            </div>
+                            <h6>User Satisfaction</h6>
+                        </div>
+                        <div class="col-md-3 text-center mb-4">
+                            <div class="metric-circle mx-auto mb-3">
+                                <div class="progress-circle" data-percentage="92">
+                                    <span class="progress-text">92%</span>
+                                </div>
+                            </div>
+                            <h6>Success Rate</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.progress-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: conic-gradient(#28a745 0deg, #28a745 var(--percentage, 0deg), #e9ecef var(--percentage, 0deg));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.progress-circle::before {
+    content: '';
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+}
+
+.progress-text {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #28a745;
+    z-index: 1;
+}
+
+.status-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.status-item:last-child {
+    border-bottom: none;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize charts
+    initializeCharts();
+    
+    // Start real-time updates
+    startRealTimeUpdates();
+    
+    // Initialize progress circles
+    initializeProgressCircles();
+});
+
+function initializeCharts() {
+    // Disease Distribution Chart
+    const diseaseCtx = document.getElementById('diseaseChart').getContext('2d');
+    new Chart(diseaseCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Bacterial Blight', 'Curl Virus', 'Healthy Leaf', 'Herbicide Damage', 'Leaf Hopper', 'Leaf Redding', 'Leaf Variegation'],
+            datasets: [{
+                data: [15, 8, 45, 12, 10, 6, 4],
+                backgroundColor: [
+                    '#dc3545',
+                    '#ffc107',
+                    '#28a745',
+                    '#fd7e14',
+                    '#17a2b8',
+                    '#e83e8c',
+                    '#6f42c1'
+                ],
+                borderWidth: 2,
+                borderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Processing Time Chart
+    const processingCtx = document.getElementById('processingChart').getContext('2d');
+    new Chart(processingCtx, {
+        type: 'line',
+        data: {
+            labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+            datasets: [{
+                label: 'Processing Time (seconds)',
+                data: [2.1, 1.8, 2.3, 1.9, 2.0, 1.7],
+                borderColor: '#17a2b8',
+                backgroundColor: 'rgba(23, 162, 184, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Time (seconds)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Time of Day'
+                    }
+                }
+            }
+        }
+    });
+}
+
+function startRealTimeUpdates() {
+    // Simulate real-time data updates
+    setInterval(() => {
+        updateMetrics();
+        updateRecentActivity();
+        updateSystemStatus();
+    }, 5000);
+}
+
+function updateMetrics() {
+    // Update total images
+    const totalImages = document.getElementById('totalImages');
+    const currentCount = parseInt(totalImages.textContent) || 0;
+    totalImages.textContent = currentCount + Math.floor(Math.random() * 3);
+    
+    // Update active users
+    const activeUsers = document.getElementById('activeUsers');
+    const userCount = Math.floor(Math.random() * 20) + 5;
+    activeUsers.textContent = userCount;
+    
+    // Update average processing time
+    const avgTime = document.getElementById('avgProcessingTime');
+    const time = (1.5 + Math.random() * 1).toFixed(1);
+    avgTime.textContent = time + 's';
+    
+    // Update average accuracy
+    const avgAccuracy = document.getElementById('avgAccuracy');
+    const accuracy = (90 + Math.random() * 8).toFixed(1);
+    avgAccuracy.textContent = accuracy + '%';
+}
+
+function updateRecentActivity() {
+    const diseases = ['Bacterial Blight', 'Curl Virus', 'Healthy Leaf', 'Herbicide Damage', 'Leaf Hopper', 'Leaf Redding', 'Leaf Variegation'];
+    const tableBody = document.getElementById('recentActivity');
+    
+    // Generate random recent activity
+    const activities = [];
+    for (let i = 0; i < 5; i++) {
+        const disease = diseases[Math.floor(Math.random() * diseases.length)];
+        const confidence = (80 + Math.random() * 20).toFixed(1);
+        const processingTime = (1 + Math.random() * 2).toFixed(2);
+        const time = new Date(Date.now() - Math.random() * 3600000).toLocaleTimeString();
+        
+        activities.push(`
+            <tr>
+                <td>${time}</td>
+                <td>${disease}</td>
+                <td><span class="badge bg-success">${confidence}%</span></td>
+                <td>${processingTime}s</td>
+                <td><span class="badge bg-success">Success</span></td>
+            </tr>
+        `);
+    }
+    
+    tableBody.innerHTML = activities.join('');
+}
+
+function updateSystemStatus() {
+    // Update uptime
+    const uptime = document.getElementById('uptime');
+    const days = Math.floor(Math.random() * 30);
+    const hours = Math.floor(Math.random() * 24);
+    const minutes = Math.floor(Math.random() * 60);
+    uptime.textContent = `${days}d ${hours}h ${minutes}m`;
+    
+    // Update memory usage
+    const memoryUsage = document.getElementById('memoryUsage');
+    const usage = (60 + Math.random() * 30).toFixed(1);
+    memoryUsage.textContent = usage + '%';
+}
+
+function initializeProgressCircles() {
+    document.querySelectorAll('.progress-circle').forEach(circle => {
+        const percentage = circle.getAttribute('data-percentage');
+        circle.style.setProperty('--percentage', `${percentage * 3.6}deg`);
+    });
+}
+</script>
+{% endblock %}

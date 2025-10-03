@@ -1,0 +1,34 @@
+<<<<<<< HEAD
+[phases.setup]
+nixPkgs = ["python39", "python39Packages.pip", "gcc", "gfortran", "openblas", "lapack"]
+
+[phases.install]
+cmds = [
+    "pip install --upgrade pip",
+    "pip install --no-cache-dir -r requirements.txt"
+]
+
+[phases.build]
+cmds = [
+    "python -c 'import tensorflow as tf; print(\"TensorFlow version:\", tf.__version__)'"
+]
+
+[start]
+cmd = "gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 300 --worker-class sync app:app"
+=======
+[phases.setup]
+nixPkgs = ["python39", "python39Packages.pip"]
+
+[phases.install]
+cmds = [
+    "pip install -r requirements.txt"
+]
+
+[phases.build]
+cmds = [
+    "python -c 'import tensorflow as tf; print(\"TensorFlow version:\", tf.__version__)'"
+]
+
+[start]
+cmd = "gunicorn --bind 0.0.0.0:$PORT --workers 4 --timeout 120 app:app"
+>>>>>>> e1fcd1d8ea3d427a90f7cd895c6c465448981fcb
