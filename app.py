@@ -105,25 +105,29 @@ def load_model_and_encoder():
 def predict_disease(image_path):
     """Predict plant disease from image"""
     global model, label_encoder
-    
+
     if model is None or label_encoder is None:
-        # Return mock prediction for demo purposes
-        mock_classes = ['Healthy', 'Bacterial Spot', 'Early Blight', 'Late Blight', 'Leaf Mold', 'Septoria Leaf Spot', 'Spider Mites']
-        import random
-        predicted_class = random.choice(mock_classes)
-        confidence = round(random.uniform(0.7, 0.95), 3)
-        
-        return {
-            'predicted_class': predicted_class,
-            'confidence': confidence,
-            'all_predictions': [
-                {'class': predicted_class, 'confidence': confidence},
-                {'class': 'Healthy', 'confidence': round(random.uniform(0.1, 0.3), 3)},
-                {'class': 'Early Blight', 'confidence': round(random.uniform(0.05, 0.2), 3)}
-            ],
-            'image_path': image_path,
-            'model_status': 'demo_mode'
-        }, None
+        # Try to load model lazily
+        logger.info("Model not loaded, attempting lazy load...")
+        if not load_model_and_encoder():
+            logger.warning("Failed to load model, using demo mode")
+            # Return mock prediction for demo purposes
+            mock_classes = ['Healthy', 'Bacterial Spot', 'Early Blight', 'Late Blight', 'Leaf Mold', 'Septoria Leaf Spot', 'Spider Mites']
+            import random
+            predicted_class = random.choice(mock_classes)
+            confidence = round(random.uniform(0.7, 0.95), 3)
+
+            return {
+                'predicted_class': predicted_class,
+                'confidence': confidence,
+                'all_predictions': [
+                    {'class': predicted_class, 'confidence': confidence},
+                    {'class': 'Healthy', 'confidence': round(random.uniform(0.1, 0.3), 3)},
+                    {'class': 'Early Blight', 'confidence': round(random.uniform(0.05, 0.2), 3)}
+                ],
+                'image_path': image_path,
+                'model_status': 'demo_mode'
+            }, None
     
     try:
         # Preprocess image
@@ -612,24 +616,19 @@ def run_training_process(training_id, config, training_data_dir):
             app.training_sessions[training_id]['error'] = str(e)
 
 if __name__ == '__main__':
-    # Initialize model on startup
+    # Initialize model lazily (not on startup to save memory)
     logger.info("🚀 Starting Cotton Plant Disease Analysis Application...")
-    
-    if load_model_and_encoder(): # Use the new function
-        logger.info("✅ Model loaded successfully - Ready to analyze cotton plant diseases!")
-    else:
-        logger.warning("⚠️ Model not found. Please train the model first using train.bat or 'python train_model.py'")
-        logger.warning("Some features may not work until the model is trained.")
-    
+    logger.info("Model will be loaded on first prediction request to optimize memory usage.")
+
     # Initialize real-time analytics
     logger.info("Initializing real-time analytics...")
     analytics = create_realtime_app(app)
     logger.info("✅ Real-time analytics initialized")
-    
+
     # Run Flask app
     port = app.config.get('PORT', 5000)
     host = app.config.get('HOST', '0.0.0.0')
     debug = app.config.get('DEBUG', False)
-    
+
     logger.info(f"🌐 Starting web server on http://{host}:{port}")
     app.run(debug=debug, host=host, port=port)
