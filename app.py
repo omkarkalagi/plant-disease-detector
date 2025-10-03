@@ -613,10 +613,10 @@ def run_training_process(training_id, config, training_data_dir):
 
 if __name__ == '__main__':
     # Initialize model on startup
-    logger.info("🚀 Starting Plant Disease Analysis Application...")
+    logger.info("🚀 Starting Cotton Plant Disease Analysis Application...")
     
     if load_model_and_encoder(): # Use the new function
-        logger.info("✅ Model loaded successfully - Ready to analyze plant diseases!")
+        logger.info("✅ Model loaded successfully - Ready to analyze cotton plant diseases!")
     else:
         logger.warning("⚠️ Model not found. Please train the model first using train.bat or 'python train_model.py'")
         logger.warning("Some features may not work until the model is trained.")

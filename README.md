@@ -1,9 +1,8 @@
-<<<<<<< HEAD
-# 🌱 PlantAI Disease Detector
+# 🌱 CottonAI Disease Detector
 
-A cutting-edge AI-powered web application for detecting plant diseases with 98%+ accuracy. Built with Flask, TensorFlow, and modern web technologies.
+A cutting-edge AI-powered web application for detecting cotton plant diseases with 98%+ accuracy. Built with Flask, TensorFlow, and modern web technologies.
 
-![PlantAI Logo](https://img.shields.io/badge/PlantAI-Disease%20Detector-00d4aa?style=for-the-badge&logo=leaf)
+![CottonAI Logo](https://img.shields.io/badge/CottonAI-Disease%20Detector-00d4aa?style=for-the-badge&logo=leaf)
 ![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.13+-orange?style=for-the-badge&logo=tensorflow)
 ![Flask](https://img.shields.io/badge/Flask-2.3+-green?style=for-the-badge&logo=flask)
@@ -18,7 +17,7 @@ A cutting-edge AI-powered web application for detecting plant diseases with 98%+
 - **98%+ Accuracy**: State-of-the-art deep learning models
 - **Real-time Analysis**: Instant disease detection in under 3 seconds
 - **Multiple Architectures**: EfficientNet, ResNet, Custom CNN, and Ensemble models
-- **7 Disease Classes**: Comprehensive plant disease coverage
+- **7 Disease Classes**: Comprehensive cotton plant disease coverage
 
 ### 📱 **Modern Web Interface**
 - **Responsive Design**: Works perfectly on desktop, tablet, and mobile
@@ -294,7 +293,7 @@ A cutting-edge AI-powered web application for detecting plant diseases with 98%+
 - **98%+ Accuracy**: State-of-the-art deep learning models
 - **Real-time Analysis**: Instant disease detection in under 3 seconds
 - **Multiple Architectures**: EfficientNet, ResNet, Custom CNN, and Ensemble models
-- **7 Disease Classes**: Comprehensive plant disease coverage
+- **7 Disease Classes**: Comprehensive cotton plant disease coverage
 
 ### 📱 **Modern Web Interface**
 - **Responsive Design**: Works perfectly on desktop, tablet, and mobile
