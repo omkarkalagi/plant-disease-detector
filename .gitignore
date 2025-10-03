@@ -127,7 +127,6 @@ models/
 training_data/
 uploads/
 *.csv
-*.json
 
 # Large Dataset Files
 Original Dataset/
