@@ -1,0 +1,60 @@
+# Models
+models/
+*.h5
+*.pkl
+*.joblib
+
+# Virtual Environment
+plant_disease_env/
+venv/
+env/
+.venv/
+
+# Datasets
+Original Dataset/
+Augmented Dataset/
+training_data/
+uploads/
+*.zip
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Logs
+*.log
+logs/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Cache
+.cache/
+*.cache
+
+# Backup
+*.bak
+*.backup
+
+# Test files
+test_*.py
+*_test.py
